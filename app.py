@@ -17,7 +17,7 @@ end_date = today
 
 
 st.set_page_config(layout="wide")
-ACCESS_TOKEN = "EAAHZCtssIKuUBO83GHpZAUbVbUDGltlbvQZBlbvYtAmMTDOu3wgCQyDb1hdZBH1hYk7LZC5rIjzG6N6v8x11qfpsMjvd816kJDb0HfJe2kd4RclD7knaN7i4un4xR7Dde4sgZB98MmSUL2vcsAnNIkr89lIG0X8XSPsW8v9cNSVLZCAwZAdxl19MF5fWJE9nZAS20"
+ACCESS_TOKEN = st.secrets["meta_access_token"]
 
 st.title("Meta Ads Tracker")
 st.divider()

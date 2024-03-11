@@ -1,25 +1,23 @@
 import os
 import logging
 import snowflake.connector
-from dotenv import load_dotenv
+import streamlit as st
 
-load_dotenv()
-SNOWFLAKE_USER = os.getenv("SNOWFLAKE_USER")
-SNOWFLAKE_PWD = os.getenv("SNOWFLAKE_PWD")
-SNOWFLAKE_ACC = os.getenv("SNOWFLAKE_ACC")
+SNOWFLAKE_USER = st.secrets["snowflake_user"]
+SNOWFLAKE_PWD = st.secrets["snowflake_pwd"]
+SNOWFLAKE_ACC = st.secrets["snowflake_acc"]
+
 
 def connect_to_snowflake():
 
     try:
 
         ctx = snowflake.connector.connect(
-            user=SNOWFLAKE_USER,
-            password=SNOWFLAKE_PWD,
-            account=SNOWFLAKE_ACC
+            user=SNOWFLAKE_USER, password=SNOWFLAKE_PWD, account=SNOWFLAKE_ACC
         )
 
         return ctx
-  
+
     except Exception as e:
         logging.exception(f"snowflake error, connection exception {e}")
 
@@ -28,7 +26,7 @@ def read_playlists():
 
     try:
         ctx = connect_to_snowflake()
-        
+
         cs = ctx.cursor()
         cs.execute(
             f"""SELECT
@@ -47,6 +45,6 @@ def read_playlists():
         data = cs.fetchall()
 
         return data
-    
+
     except Exception as e:
         logging.exception(f"snowflake error, read playlists exception {e}")
