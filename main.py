@@ -1,8 +1,9 @@
 from snowflake_utils import read_playlists
 
-def main(): 
+
+def main():
     print(read_playlists())
-  
-  
-if __name__=="__main__": 
-    main() 
+
+
+if __name__ == "__main__":
+    main()

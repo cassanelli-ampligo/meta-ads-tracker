@@ -9,6 +9,8 @@ from datetime import datetime, timedelta
 from meta_api import InsightAPIClient, getInsight
 import requests
 
+from colorize import colorize
+
 today = datetime.now()
 yesterday = today - timedelta(days=1)
 
@@ -175,12 +177,13 @@ for playlist_id, records in playlist_data.items():
     tracked_playlists[-1]["Cost per Followers"] = f"€{cost_per_followers}"
 
     tracked_playlists[-1]["Ratio"] = f"{int(diff/spotify_contains*100)}%"
-
-    tracked_playlists[-1]["cpm"] = f"€{round(float(insights['cpm']), 3)}"
-    tracked_playlists[-1]["impressions"] = format(int(insights["impressions"]), ",")
-    tracked_playlists[-1]["reach"] = format(int(insights["reach"]), ",")
-    tracked_playlists[-1]["Date Start"] = insights["created_time"]
-    tracked_playlists[-1]["Last Update"] = insights["updated_time"]
+    tracked_playlists[-1]["cpm"] = f"€{round(float(insights.get('cpm', 0)), 3)}"
+    tracked_playlists[-1]["impressions"] = format(
+        int(insights.get("impressions", 0)), ","
+    )
+    tracked_playlists[-1]["reach"] = format(int(insights.get("reach", 0)), ",")
+    tracked_playlists[-1]["Date Start"] = insights.get("created_time", "N/A")
+    tracked_playlists[-1]["Last Update"] = insights.get("updated_time", "N/A")
 
     tracked_playlists.sort(key=lambda x: x["Name"])
 
@@ -277,8 +280,9 @@ for playlist_id, records in playlist_data.items():
             )
             untracked_playlists.sort(key=lambda x: x["Name"])
 
+
 st.subheader("Tracked Playlists")
-st.table(tracked_playlists)
+st.dataframe(colorize(tracked_playlists))
 
 st.subheader("Not in Campaign Playlists")
 st.table(not_campaign_playlists)
