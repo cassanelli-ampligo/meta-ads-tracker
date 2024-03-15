@@ -174,7 +174,14 @@ for playlist_id, records in playlist_data.items():
     tracked_playlists[-1][
         "Cost per Spotify Contain"
     ] = f"€{round(cost_per_spotify_contain, 3)}"
-    tracked_playlists[-1]["Cost per Followers"] = f"€{cost_per_followers}"
+    tracked_playlists[-1]["CPF"] = f"€{cost_per_followers}"
+
+    if diff != "N/A" and isinstance(diff, str):
+        diff = int(diff)
+    if isinstance(diff, int) and diff > 0:
+        tracked_playlists[-1]["CPF - Real"] = round(float(insights["spend"]), 3) / diff
+    else:
+        tracked_playlists[-1]["CPF - Real"] = "N/A"
 
     tracked_playlists[-1]["Ratio"] = f"{int(diff/spotify_contains*100)}%"
     tracked_playlists[-1]["cpm"] = f"€{round(float(insights.get('cpm', 0)), 3)}"

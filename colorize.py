@@ -14,7 +14,7 @@ def colorize(campaigns):
 
         color = "white"
 
-        if val < 0.25:
+        if val <= 0.25:
             color = "#98FB98"  # Light green
         elif 0.25 < val < 0.30:
             color = "#FFD700"  # Gold
@@ -23,6 +23,6 @@ def colorize(campaigns):
         return f"color: {color}"
 
     # Applying the styling
-    styled_df = df.style.applymap(color_cpf_values, subset=["Cost per Followers"])
+    styled_df = df.style.applymap(color_cpf_values, subset=["CPF", "CPF - Real"])
 
     return styled_df
