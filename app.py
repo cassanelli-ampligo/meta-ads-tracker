@@ -174,6 +174,7 @@ for playlist_id, records in playlist_data.items():
     tracked_playlists[-1][
         "Cost per Spotify Contain"
     ] = f"€{round(cost_per_spotify_contain, 3)}"
+
     tracked_playlists[-1]["CPF"] = f"€{cost_per_followers}"
 
     if diff != "N/A" and isinstance(diff, str):
@@ -289,7 +290,10 @@ for playlist_id, records in playlist_data.items():
 
 
 st.subheader("Tracked Playlists")
-st.dataframe(colorize(tracked_playlists))
+if len(tracked_playlists) == 0:
+    st.write("No tracked playlists found")
+else:
+    st.dataframe(colorize(tracked_playlists))
 
 st.subheader("Not in Campaign Playlists")
 st.table(not_campaign_playlists)

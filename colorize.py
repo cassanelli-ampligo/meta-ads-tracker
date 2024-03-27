@@ -5,6 +5,7 @@ def colorize(campaigns):
 
     # Convert to DataFrame
     df = pd.DataFrame(campaigns)
+    df = df.sort_values(by=["CPF"], ascending=[False])
 
     # Function to apply conditional coloring
     def color_cpf_values(val):
